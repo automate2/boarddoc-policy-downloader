@@ -25,18 +25,14 @@ def process_policy_link(link):
             link.click()
             print("clicking policy " + policy_name)
             time.sleep(1)
-            view_policy_item = driver.find_element(By.ID, 'view-policy-item')
-            
-            #wait = WebDriverWait(driver, 3)  # Adjust the waiting time as needed
-            #view_policy_item = wait.until(EC.presence_of_element_located((By.ID, 'view-policy-item')))
-            
-            # 3A. Get the inner HTML of the element with the ID 'view-policy-item'
+            # 3A. Get the inner text of the element with the ID 'view-policy-item' to use as the body of the file
+            view_policy_item = driver.find_element(By.ID, 'view-policy-item')          
             content = view_policy_item.get_attribute('innerText')
 
-            # Save the file with the name from 1A and content from 2A
+            # Save the file with the name from 1A and content from 3A
             save_file(f"{file_name}", content)
             
-            # save attachments
+            # find and save attachments
             attachments = driver.find_elements(By.XPATH, '//a[contains(@href, ".pdf") or contains(@href, ".doc")]')
             if len(attachments)>0:
                 print("found attachment(s)")
@@ -68,9 +64,7 @@ def process_board_link(board_link):
         # 2. Process each link
         process_policy_link(policy_link)
 
-    
-
-# Example usage
+# This can be changed to be used on other board doc sites
 url = 'http://www.boarddocs.com/wa/ksdwa/Board.nsf/Public'
 driver = webdriver.Chrome()  # You need to have ChromeDriver installed and in your PATH
 print("opening chrome")
@@ -80,18 +74,16 @@ time.sleep(3)
 # Navigate to the URL
 driver.get(url)
 print("opening ksd page")
-#wait = WebDriverWait(driver, 10)  # Adjust the waiting time as needed
 time.sleep(6)
+# this is the xpath to get the policies
 policy_main = driver.find_element(By.XPATH, "//*[@id='ui-id-5']")
 policy_main.click()
 print("clicking policies")
 time.sleep(6)
-# wait = WebDriverWait(driver, 10)  # Adjust the waiting time as needed
 
 # find list of top category items
 print("getting board menu items")
 boardmenu_links = driver.find_elements(By.XPATH, "//a[@class='lefMenu' and @tabindex='-1']")
-
 for cat_link in boardmenu_links:
     process_board_link(cat_link)
 
