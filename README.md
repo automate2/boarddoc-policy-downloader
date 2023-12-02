@@ -1,5 +1,6 @@
 # BoardDoc Policy Downloader
-Designed to gather all the policy pages in addition to attachments for the Kent School District Board Docs document site.
+Designed to gather all the policy pages in addition to attachments for a board doc site.
+Kent School District Board Docs: ```https://go.boarddocs.com/wa/ksdwa/Board.nsf/Public```
 
 This script is for educational purposes only.  Any usage outside of educational is at your own risk.
 
